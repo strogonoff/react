@@ -6,6 +6,8 @@ import terser from '@rollup/plugin-terser'
 import glob from 'fast-glob'
 import {visualizer} from 'rollup-plugin-visualizer'
 import postcss from 'rollup-plugin-postcss'
+import postcssCustomPropertiesFallbackPlugin from 'postcss-custom-properties-fallback'
+import colorFallbacks from '@primer/primitives/tokens-next-private/fallbacks/color-fallbacks.json'
 import packageJson from './package.json'
 
 const input = new Set([
@@ -116,6 +118,11 @@ const baseConfig = {
       extract: 'components.css',
       autoModules: false,
       modules: {generateScopedName: 'prc_[local]-[hash:base64:5]'},
+      plugins: [
+        postcssCustomPropertiesFallbackPlugin({
+          importFrom: {customProperties: colorFallbacks},
+        }),
+      ],
     }),
   ],
 }
