@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react'
 import Box from '../../Box'
-import VisuallyHidden from '../../_VisuallyHidden'
+import VisuallyHidden from '../../internal/components/_VisuallyHidden'
 import {useId} from '../../hooks/useId'
 import {useResizeObserver} from '../../hooks/useResizeObserver'
 import {useSlots} from '../../hooks/useSlots'

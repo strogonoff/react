@@ -7,7 +7,7 @@ import {useSSRSafeId} from '../../../utils/ssr'
 import CheckboxOrRadioGroupCaption from './CheckboxOrRadioGroupCaption'
 import CheckboxOrRadioGroupLabel from './CheckboxOrRadioGroupLabel'
 import CheckboxOrRadioGroupValidation from './CheckboxOrRadioGroupValidation'
-import VisuallyHidden from '../../../_VisuallyHidden'
+import VisuallyHidden from '../_VisuallyHidden'
 import {useSlots} from '../../../hooks/useSlots'
 import {SxProp} from '../../../sx'
 

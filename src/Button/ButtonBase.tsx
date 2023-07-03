@@ -74,7 +74,7 @@ const ButtonBase = forwardRef(
             <Box as="span" data-component="buttonContent" sx={getAlignContentSize(alignContent)}>
               {LeadingIcon && (
                 <Box as="span" data-component="leadingVisual" sx={{...iconWrapStyles}}>
-                  <LeadingIcon />
+                  <LeadingIcon
                 </Box>
               )}
               {children && <span data-component="text">{children}</span>}

@@ -10,7 +10,7 @@ import {Theme} from '../ThemeProvider'
 import {canUseDOM} from '../utils/environment'
 import {useOverflow} from '../internal/hooks/useOverflow'
 import {warning} from '../utils/warning'
-import VisuallyHidden from '../_VisuallyHidden'
+import VisuallyHidden from '../internal/components/_VisuallyHidden'
 import {useStickyPaneHeight} from './useStickyPaneHeight'
 
 const REGION_ORDER = {

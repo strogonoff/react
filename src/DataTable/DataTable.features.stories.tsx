@@ -20,7 +20,7 @@ import Heading from '../Heading'
 import Label from '../Label'
 import LabelGroup from '../LabelGroup'
 import RelativeTime from '../RelativeTime'
-import VisuallyHidden from '../_VisuallyHidden'
+import VisuallyHidden from '../internal/components/_VisuallyHidden'
 import {createColumnHelper} from './column'
 import {fetchRepos, repos, useFlakeyQuery} from './storybook/data'
 
