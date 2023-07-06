@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, RefObject, useCallback, useEffect, useRef, useState} from 'react'
+import React, {ChangeEventHandler, RefObject, useCallback, useContext, useEffect, useRef, useState} from 'react'
 import {Meta} from '@storybook/react'
 
 import {BaseStyles, Box, Dialog, ThemeProvider, registerPortalRoot} from '..'
@@ -7,7 +7,9 @@ import Autocomplete from '../Autocomplete/Autocomplete'
 import {AnchoredOverlay} from '../AnchoredOverlay'
 import FormControl from '../FormControl'
 import {Button} from '../Button'
+
 import {ComponentProps} from '../utils/types'
+
 import {
   FormControlArgs,
   formControlArgs,
@@ -18,6 +20,7 @@ import {
 } from '../utils/story-helpers'
 import {within, userEvent} from '@storybook/testing-library'
 import {expect} from '@storybook/jest'
+import {AutocompleteContext} from '../Autocomplete/AutocompleteContext'
 
 type AutocompleteOverlayArgs = ComponentProps<typeof Autocomplete.Overlay>
 type AutocompleteMenuArgs = ComponentProps<typeof Autocomplete.Menu>
@@ -757,27 +760,35 @@ InOverlayWithCustomScrollContainerRef.parameters = {
 export const InADialog = (args: FormControlArgs<AutocompleteArgs>) => {
   const {overlayArgs} = getArgsByChildComponent(args)
   const outerContainerRef = useRef<HTMLDivElement>(null)
+  const inputContainerRef = useRef<HTMLInputElement>(null)
   const [mounted, setMounted] = useState(false)
+  const [inputValue, setInputValue] = useState('')
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  // const autocompleteContext = useContext(AutocompleteContext)
 
   useEffect(() => {
     if (outerContainerRef.current instanceof HTMLElement) {
       registerPortalRoot(outerContainerRef.current, 'outerContainer')
       setMounted(true)
     }
-  }, [isDialogOpen])
+    setInputValue(inputContainerRef.current?.value ?? '')
+  }, [isDialogOpen, overlayArgs, inputContainerRef, setInputValue])
 
   return (
     <>
       <Button onClick={() => setIsDialogOpen(!isDialogOpen)}>Show dialog</Button>
-      <Dialog id="dialog-with-autocomplete" isOpen={isDialogOpen}>
+      <Dialog
+        id="dialog-with-autocomplete"
+        isOpen={isDialogOpen}
+        onDismiss={() => !inputValue && setIsDialogOpen(false)}
+      >
         <div ref={outerContainerRef}>
           <Box as="form" sx={{p: 3}}>
             {mounted ? (
               <FormControl>
                 <FormControl.Label id="autocompleteLabel" />
                 <Autocomplete>
-                  <Autocomplete.Input data-testid="autocompleteInput" />
+                  <Autocomplete.Input data-testid="autocompleteInput" ref={inputContainerRef} />
                   <Autocomplete.Overlay {...overlayArgs} portalContainerName="outerContainer">
                     <Autocomplete.Menu items={items} selectedItemIds={[]} aria-labelledby="autocompleteLabel" />
                   </Autocomplete.Overlay>

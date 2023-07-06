@@ -41,9 +41,14 @@ function AutocompleteOverlay({
 
   useRefObjectAsForwardedRef(scrollContainerRef, floatingElementRef)
 
-  const closeOptionList = useCallback(() => {
-    setShowMenu(false)
-  }, [setShowMenu])
+  const closeOptionList = useCallback(
+    (e: Event) => {
+      setShowMenu(false)
+      e.stopPropagation()
+      console.log('showMenu', showMenu)
+    },
+    [setShowMenu, showMenu],
+  )
 
   if (typeof window === 'undefined') {
     return null
