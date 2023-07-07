@@ -1,4 +1,4 @@
-import React, {forwardRef, useRef} from 'react'
+import React, {forwardRef, useRef, useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import ButtonClose from './deprecated/Button/ButtonClose'
 import {get} from './constants'
@@ -8,6 +8,8 @@ import sx, {SxProp} from './sx'
 import Text from './Text'
 import {ComponentProps} from './utils/types'
 import {useRefObjectAsForwardedRef} from './hooks/useRefObjectAsForwardedRef'
+import {useOnEscapePress} from './hooks/useOnEscapePress'
+import {AutocompleteContext} from './Autocomplete/AutocompleteContext'
 
 const noop = () => null
 
@@ -98,6 +100,13 @@ const Dialog = forwardRef<HTMLDivElement, InternalDialogProps>(
     const modalRef = useRef<HTMLDivElement>(null)
     useRefObjectAsForwardedRef(forwardedRef, modalRef)
     const closeButtonRef = useRef(null)
+    const autocompleteContext = useContext(AutocompleteContext)
+    // const {inputRef, setShowMenu, showMenu = false} = autocompleteContext
+
+    useEffect(() => {
+      console.log('sfs')
+      autocompleteContext && console.log(autocompleteContext)
+    }, [autocompleteContext])
 
     const onCloseClick = () => {
       onDismiss()
@@ -105,6 +114,20 @@ const Dialog = forwardRef<HTMLDivElement, InternalDialogProps>(
         returnFocusRef.current.focus()
       }
     }
+
+    useOnEscapePress(
+      (event: KeyboardEvent) => {
+        console.log('new keyhoabr', event)
+        onDismiss()
+        if (returnFocusRef && returnFocusRef.current) {
+          returnFocusRef.current.focus()
+        }
+        // event.preventDefault()
+        // event.stopImmediatePropagation()
+        // event.stopPropagation()
+      },
+      [onCloseClick],
+    )
 
     const {getDialogProps} = useDialog({
       modalRef,
@@ -115,8 +138,8 @@ const Dialog = forwardRef<HTMLDivElement, InternalDialogProps>(
       returnFocusRef,
       overlayRef,
     })
-    return isOpen ? (
-      <>
+    return (
+      <div style={{display: isOpen ? 'block' : 'none'}}>
         <Overlay ref={overlayRef} />
         <DialogBase tabIndex={-1} ref={modalRef} role="dialog" aria-modal="true" {...props} {...getDialogProps()}>
           <ButtonClose
@@ -126,8 +149,8 @@ const Dialog = forwardRef<HTMLDivElement, InternalDialogProps>(
           />
           {children}
         </DialogBase>
-      </>
-    ) : null
+      </div>
+    )
   },
 )
 

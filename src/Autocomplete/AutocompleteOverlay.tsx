@@ -1,5 +1,6 @@
-import React, {useCallback, useContext} from 'react'
-import {useAnchoredPosition} from '../hooks'
+/* eslint-disable no-console */
+import React, {useCallback, useContext, useEffect} from 'react'
+import {useAnchoredPosition, useOnEscapePress} from '../hooks'
 import Overlay, {OverlayProps} from '../Overlay'
 import {ComponentProps} from '../utils/types'
 import {AutocompleteContext} from './AutocompleteContext'
@@ -41,14 +42,40 @@ function AutocompleteOverlay({
 
   useRefObjectAsForwardedRef(scrollContainerRef, floatingElementRef)
 
-  const closeOptionList = useCallback(
-    (e: Event) => {
-      setShowMenu(false)
-      e.stopPropagation()
-      console.log('showMenu', showMenu)
+  const escCloseOptionList = useCallback(
+    (e: KeyboardEvent) => {
+      console.log('think')
+      if (e.key === 'Escape' && showMenu) {
+        console.log(e, showMenu)
+        // e.preventDefault()
+        // e.stopPropagation()
+        setShowMenu(false)
+        return null
+        // e.stopImmediatePropagation()
+      }
     },
     [setShowMenu, showMenu],
   )
+
+  const closeOptionList = useCallback(() => {
+    setShowMenu(false)
+  }, [setShowMenu])
+  useEffect(() => {
+    console.log('showMenu', showMenu)
+  }, [showMenu])
+
+  // useOnEscapePress(
+  //   (event: KeyboardEvent) => {
+  //     console.log('escape in overlay')
+  //     // setShowMenu(false)
+  //     // event.preventDefault()
+  //     // if (showMenu) {
+  //     //   setShowMenu(false)
+  //     //   event.stopPropagation()
+  //     // }
+  //   },
+  //   [showMenu, setShowMenu],
+  // )
 
   if (typeof window === 'undefined') {
     return null
@@ -59,7 +86,7 @@ function AutocompleteOverlay({
       returnFocusRef={inputRef}
       preventFocusOnOpen={true}
       onClickOutside={closeOptionList}
-      onEscape={closeOptionList}
+      onEscape={escCloseOptionList}
       ref={floatingElementRef as React.RefObject<HTMLDivElement>}
       top={position?.top}
       left={position?.left}

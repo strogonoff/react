@@ -98,14 +98,14 @@ function useDialog({
   )
 
   const onKeyDown = useCallback(
-    (event: React.KeyboardEvent, flag = true) => {
+    (event: React.KeyboardEvent) => {
       switch (event.key) {
         case 'Tab':
           handleTab(event)
           break
         case 'Escape':
-          console.log('useDialog escape, flag', flag)
-          flag && onDismiss()
+          console.log('useDialog escape')
+          onDismiss()
           // event.stopPropagation()
           break
       }
