@@ -1,5 +1,23 @@
 # @primer/components
 
+## 36.4.1
+
+### Patch Changes
+
+- [#4023](https://github.com/primer/react/pull/4023) [`83c125fc`](https://github.com/primer/react/commit/83c125fc58df9c9ea6b43363367575cb28ac354c) Thanks [@mperrotti](https://github.com/mperrotti)! - Use `aria-required` instead of `required` on required form elements
+
+  <!-- Changed components: TextInput, Textarea -->
+
+- [#3869](https://github.com/primer/react/pull/3869) [`57fcfe6f`](https://github.com/primer/react/commit/57fcfe6fa2478dbf0ecdb29a000dd32fa2e01537) Thanks [@mperrotti](https://github.com/mperrotti)! - Adapts Blankslate to render proportionally in narrow areas.
+
+  <!-- Changed components: Blankslate -->
+
+- [#4035](https://github.com/primer/react/pull/4035) [`6497f715`](https://github.com/primer/react/commit/6497f71597ff111fd2c81d834f1d3d80cc1cca18) Thanks [@keithamus](https://github.com/keithamus)! - use <BaseStyles> in confirm()
+
+- [#4033](https://github.com/primer/react/pull/4033) [`bca709d0`](https://github.com/primer/react/commit/bca709d03eee5885b0eeec99db17fa76f910b865) Thanks [@keithamus](https://github.com/keithamus)! - Fixed confirm() leaving <div>s in the DOM.
+
+- [#4037](https://github.com/primer/react/pull/4037) [`c2a18b9a`](https://github.com/primer/react/commit/c2a18b9a23af7632ae5bad1240f9155df67655a9) Thanks [@mattcosta7](https://github.com/mattcosta7)! - Portal avoids useless createElement
+
 ## 36.4.0
 
 ### Minor Changes
